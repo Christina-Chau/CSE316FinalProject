@@ -13,6 +13,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import { Hidden } from '@mui/material';
 
 export default function AppBanner() {
     const { auth } = useContext(AuthContext);
@@ -34,26 +35,6 @@ export default function AppBanner() {
     }
 
     const menuId = 'primary-search-account-menu';
-    const loggedOutMenu = (
-        <Menu
-            anchorEl={anchorEl}
-            anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            id={menuId}
-            keepMounted
-            transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            open={isMenuOpen}
-            onClose={handleMenuClose}
-        >
-            <MenuItem onClick={handleMenuClose}><Link to='/login/'>Login</Link></MenuItem>
-            <MenuItem onClick={handleMenuClose}><Link to='/register/'>Create New Account</Link></MenuItem>
-        </Menu>
-    );
     const loggedInMenu = 
         <Menu
             anchorEl={anchorEl}
@@ -74,9 +55,9 @@ export default function AppBanner() {
         </Menu>        
 
     let editToolbar = "";
-    let menu = loggedOutMenu;
+    let menu = "";
     if (auth.loggedIn) {
-        menu = loggedInMenu;
+        menu  = loggedInMenu;
         if (store.currentList) {
             editToolbar = <EditToolbar />;
         }
@@ -88,7 +69,7 @@ export default function AppBanner() {
         if (loggedIn) 
             return <div>{userInitials}</div>;
         else
-            return <AccountCircle />;
+            return null;
     }
 
     return (

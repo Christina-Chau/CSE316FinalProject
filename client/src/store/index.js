@@ -27,7 +27,8 @@ export const GlobalStoreActionType = {
     UNMARK_LIST_FOR_DELETION: "UNMARK_LIST_FOR_DELETION",
     SET_CURRENT_LIST: "SET_CURRENT_LIST",
     SET_ITEM_EDIT_ACTIVE: "SET_ITEM_EDIT_ACTIVE",
-    SET_LIST_NAME_EDIT_ACTIVE: "SET_LIST_NAME_EDIT_ACTIVE"
+    SET_LIST_NAME_EDIT_ACTIVE: "SET_LIST_NAME_EDIT_ACTIVE", 
+    SET_IS_GUEST: "SET_IS_GUEST"
 }
 
 // WE'LL NEED THIS TO PROCESS TRANSACTIONS
@@ -43,6 +44,7 @@ function GlobalStoreContextProvider(props) {
         newListCounter: 0,
         listNameActive: false,
         itemActive: false,
+        isGuest: false, 
         listMarkedForDeletion: null
     });
     const history = useHistory();
@@ -66,6 +68,7 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: false,
+                    isGuest: store.isGuest,
                     listMarkedForDeletion: null
                 });
             }
@@ -77,6 +80,7 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: false,
+                    isGuest: store.isGuest,
                     listMarkedForDeletion: null
                 })
             }
@@ -88,6 +92,7 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter + 1,
                     isListNameEditActive: false,
                     isItemEditActive: false,
+                    isGuest: store.isGuest,
                     listMarkedForDeletion: null
                 })
             }
@@ -99,6 +104,7 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: false,
+                    isGuest: store.isGuest,
                     listMarkedForDeletion: null
                 });
             }
@@ -110,6 +116,7 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: false,
+                    isGuest: store.isGuest,
                     listMarkedForDeletion: payload
                 });
             }
@@ -121,6 +128,7 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: false,
+                    isGuest: store.isGuest,
                     listMarkedForDeletion: null
                 });
             }
@@ -132,6 +140,7 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: false,
+                    isGuest: store.isGuest,
                     listMarkedForDeletion: null
                 });
             }
@@ -143,6 +152,7 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: true,
+                    isGuest: store.isGuest,
                     listMarkedForDeletion: null
                 });
             }
@@ -154,9 +164,22 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: true,
                     isItemEditActive: false,
+                    isGuest: store.isGuest,
                     listMarkedForDeletion: null
                 });
             }
+            case GlobalStoreActionType.SET_IS_GUEST: {
+                return setStore({
+                  idNamePairs: store.idNamePairs,
+                  currentList: store.currentList,
+                  newListCounter: store.newListCounter,
+                  isListNameEditActive: store.isListNameEditActive,
+                  isItemEditActive: store.isItemEditActive,
+                  listMarkedForDeletion: store.listMarkedForDeletion,
+                  isGuest: payload
+
+                });
+              }
             default:
                 return store;
         }
@@ -165,6 +188,14 @@ function GlobalStoreContextProvider(props) {
     // THESE ARE THE FUNCTIONS THAT WILL UPDATE OUR STORE AND
     // DRIVE THE STATE OF THE APPLICATION. WE'LL CALL THESE IN 
     // RESPONSE TO EVENTS INSIDE OUR COMPONENTS.
+
+    store.updateGuest = function (guest) {
+        console.log(guest);
+        storeReducer({
+          type: GlobalStoreActionType.SET_IS_GUEST,
+          payload: guest,
+        });
+      };
 
     // THIS FUNCTION PROCESSES CHANGING A LIST NAME
     store.changeListName = async function (id, newName) {
