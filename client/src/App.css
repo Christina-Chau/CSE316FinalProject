@@ -73,6 +73,10 @@ body {
   float: right;
 }
 
+#sortItem{
+  color: black;
+}
+
 .top5-button,
 .top5-button-disabled {
   font-size: 36pt;

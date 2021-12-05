@@ -1,0 +1,585 @@
+{
+    "users":[   
+        {
+            "username": "shmoeyjoey", 
+            "email":"joe.shmo@McKillaGorilla.com",
+            "first-name": "Joe",
+            "last-name": "Shmo",
+            "top5Lists": [
+                {
+                    "name": "Animals to Eat",
+                    "items": [
+                        "Lobster",
+                        "Cow",
+                        "Pig",
+                        "Chicken",
+                        "Salmon"
+                    ],
+                    "published": true,
+                    "views": 0, 
+                    "likes": 
+                    [
+                        "absaad", "LoneS-"
+                    ],
+                    "dislikes":
+                    [
+                        "eubaek"
+                    ],
+                    "comments":[
+                        {
+                            "username":"LoneS-",
+                            "comment":"Lorem ipsum"
+                        }
+                    ]
+                },
+                {
+                    "name": "Movies",
+                    "items": [
+                        "Raiders of the Lost Ark",
+                        "Goodfellas",
+                        "Lord of the Rings",
+                        "Airplane!",
+                        "Lawrence of Arabia"
+                    ],
+                    "published": true,
+                    "views": 20, 
+                    "likes": 
+                    [
+                        "absaad", "LoneS-"
+                    ],
+                    "dislikes":
+                    [
+                        "eubaek"
+                    ],
+                    "comments":[
+                        {
+                            "username":"LoneS-",
+                            "comment":"Lorem ipsum"
+                        }
+                    ]
+                },
+                {
+                    "name": "Pink Floyd Songs",
+                    "items": [
+                        "Shine On You Crazy Diamond",
+                        "Comfortably Numb",
+                        "Pigs (Three Different Ones)",
+                        "Echoes (Live at Pompeii)",
+                        "Time"
+                    ],
+                    "published": true,
+                    "views": 13, 
+                    "likes": 
+                    [
+                        "absaad", "LoneS-"
+                    ],
+                    "dislikes":
+                    [
+                        "eubaek"
+                    ],
+                    "comments":[
+                        {
+                            "username":"LoneS-",
+                            "comment":"Lorem ipsum"
+                        }
+                    ]
+                },
+                {
+                    "name": "Professional Sports Teams",
+                    "items": [
+                        "New York Yankees",
+                        "New York Knicks",
+                        "New York Islanders",
+                        "Dallas Stars",
+                        "Texas Rangers"
+                    ],
+                    "published": true,
+                    "views": 24, 
+                    "likes": 
+                    [
+                        "absaad", "LoneS-"
+                    ],
+                    "dislikes":
+                    [
+                        "eubaek"
+                    ],
+                    "comments":[
+                        {
+                            "username":"LoneS-",
+                            "comment":"Lorem ipsum"
+                        }
+                    ]
+                }
+            ]
+        }, 
+        {
+            "username": "absaad", 
+            "email":"absaad@gmail.com",
+            "first-name": "Abdullah",
+            "last-name": "Saad",
+            "top5Lists": [
+                {
+                    "name": "Animals to Eat",
+                    "items": [
+                        "Fish",
+                        "Chicken",
+                        "Lamb",
+                        "Goat",
+                        "Shrimp"
+                    ],
+                    "published": true,
+                    "views": 24, 
+                    "likes": 
+                    [
+                        "absaad", "LoneS-"
+                    ],
+                    "dislikes":
+                    [
+                        "eubaek"
+                    ],
+                    "comments":[
+                        {
+                            "username":"LoneS-",
+                            "comment":"Lorem ipsum"
+                        }
+                    ]
+                },
+                {
+                    "name": "Books",
+                    "items": [
+                        "How to Kill a Mocking Bird","The Chosen","Wuthering Heights","Harry Potter","Diary of a Wimpy Kid"
+                    ],
+                    "published": true,
+                    "views": 35, 
+                    "likes": 
+                    [
+                        "absaad", "LoneS-"
+                    ],
+                    "dislikes":
+                    [
+                        "eubaek"
+                    ],
+                    "comments":[
+                        {
+                            "username":"LoneS-",
+                            "comment":"Lorem ipsum"
+                        }
+                    ]
+                },
+                {
+                    "name": "Countries you'd like to Visit",
+                    "items": [
+                        "Saudi Arabia","Palestine","Pakistan","Iraq","Turkey"
+                    ],
+                    "published": true,
+                    "views": 6, 
+                    "likes": 
+                    [
+                        "absaad", "LoneS-"
+                    ],
+                    "dislikes":
+                    [
+                        "eubaek"
+                    ],
+                    "comments":[
+                        {
+                            "username":"LoneS-",
+                            "comment":"Lorem ipsum"
+                        }
+                    ]
+                },
+                {
+                    "name": "Games",
+                    "items": [
+                        "Legend of Zelda: Ocarina of Time","Super Smash Bros. Ultimate","MGS3","Minecraft","Legend of Zelda: Skyward Sword"
+                    ],
+                    "published": true,
+                    "views": 2, 
+                    "likes": 
+                    [
+                        "absaad", "LoneS-"
+                    ],
+                    "dislikes":
+                    [
+                        "eubaek"
+                    ],
+                    "comments":[
+                        {
+                            "username":"LoneS-",
+                            "comment":"Lorem ipsum"
+                        }
+                    ]
+                },
+                {
+                    "name": "Movies",
+                    "items": [
+                        "Your Name","The Dark Knight","Harry Potter","Inception","Interstellar"
+                    ],
+                    "published": true,
+                    "views": 36, 
+                    "likes": 
+                    [
+                        "absaad", "LoneS-"
+                    ],
+                    "dislikes":
+                    [
+                        "eubaek"
+                    ],
+                    "comments":[
+                        {
+                            "username":"LoneS-",
+                            "comment":"Lorem ipsum"
+                        }
+                    ]
+                },
+                {
+                    "name": "Pink Floyd Songs",
+                    "items": [
+                        "Comfortably Numb","Shine On You Crazy Diamond","Wish You Were Here","Time","Money"
+                    ],
+                    "published": true,
+                    "views": 13, 
+                    "likes": 
+                    [
+                        "absaad", "LoneS-"
+                    ],
+                    "dislikes":
+                    [
+                        "eubaek"
+                    ],
+                    "comments":[
+                        {
+                            "username":"LoneS-",
+                            "comment":"Lorem ipsum"
+                        }
+                    ]
+                },
+                {
+                    "name": "Programming Languages",
+                    "items": [
+                        "Java","Python","C#","C++","Javascript","C"
+                    ],
+                    "published": true,
+                    "views": 19, 
+                    "likes": 
+                    [
+                        "absaad", "LoneS-"
+                    ],
+                    "dislikes":
+                    [
+                        "eubaek"
+                    ],
+                    "comments":[
+                        {
+                            "username":"LoneS-",
+                            "comment":"Lorem ipsum"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "username": "LoneS-", 
+            "email":"orbit.actual@yahoo.com",
+            "first-name": "Avish ",
+            "last-name": "Parmar",
+            "top5Lists": [
+                {
+                    "name": "Books",
+                    "items": [
+                        "Why We Sleep","How To Think Like A Monk","7 Habits of Highly Effective People","Diary of a Wimpy Kid","Breath"
+                    ],
+                    "published": true,
+                    "views": 13, 
+                    "likes": 
+                    [
+                        "absaad", "LoneS-"
+                    ],
+                    "dislikes":
+                    [
+                        "eubaek"
+                    ],
+                    "comments":[
+                        {
+                            "username":"LoneS-",
+                            "comment":"Lorem ipsum"
+                        }
+                    ]
+                },
+                {
+                    "name": "Countries you'd like to Visit",
+                    "items": [
+                        "Switzerland","Japan","South Korea","Spain","England"
+                    ],
+                    "published": true,
+                    "views": 12, 
+                    "likes": 
+                    [
+                        "absaad", "LoneS-"
+                    ],
+                    "dislikes":
+                    [
+                        "eubaek"
+                    ],
+                    "comments":[
+                        {
+                            "username":"LoneS-",
+                            "comment":"Lorem ipsum"
+                        }
+                    ]
+                },
+                {
+                    "name": "Foods",
+                    "items": [
+                        "Masala Dosa","Pizza","Pav Bhaji","Pani Puri","Chana Masala"
+                    ],
+                    "published": true,
+                    "views": 24, 
+                    "likes": 
+                    [
+                        "absaad", "LoneS-"
+                    ],
+                    "dislikes":
+                    [
+                        "eubaek"
+                    ],
+                    "comments":[
+                        {
+                            "username":"LoneS-",
+                            "comment":"Lorem ipsum"
+                        }
+                    ]
+                },
+                {
+                    "name": "Games",
+                    "items": [
+                        "CS:GO","Valorant","World Of Tanks","Minecraft","Chess"
+                    ],
+                    "published": true,
+                    "views": 13, 
+                    "likes": 
+                    [
+                        "absaad", "LoneS-"
+                    ],
+                    "dislikes":
+                    [
+                        "eubaek"
+                    ],
+                    "comments":[
+                        {
+                            "username":"LoneS-",
+                            "comment":"Lorem ipsum"
+                        }
+                    ]
+                },
+                {
+                    "name": "Pink Floyd Songs",
+                    "items": [
+                        "Gunner's Dream","Comfortably Numb","Paranoid Eyes","Time","Shine On You Crazy Diamond"
+                    ],
+                    "published": true,
+                    "views": 36, 
+                    "likes": 
+                    [
+                        "absaad", "LoneS-"
+                    ],
+                    "dislikes":
+                    [
+                        "eubaek"
+                    ],
+                    "comments":[
+                        {
+                            "username":"LoneS-",
+                            "comment":"Lorem ipsum"
+                        }
+                    ]
+                },
+                {
+                    "name": "Programming Languages",
+                    "items": [
+                        "Java","javaScript","Python","C++","R"
+                    ],
+                    "published": true,
+                    "views": 67, 
+                    "likes": 
+                    [
+                        "absaad", "LoneS-"
+                    ],
+                    "dislikes":
+                    [
+                        "eubaek"
+                    ],
+                    "comments":[
+                        {
+                            "username":"LoneS-",
+                            "comment":"Lorem ipsum"
+                        }
+                    ]
+                },
+                {
+                    "name": "TV Shows",
+                    "items": [
+                        "Cosmos","The Office","Squid Game","Lupin","Attack On Titan"
+                    ], 
+                    "published": true,
+                    "views": 83, 
+                    "likes": 
+                    [
+                        "absaad", "LoneS-"
+                    ],
+                    "dislikes":
+                    [
+                        "eubaek"
+                    ],
+                    "comments":[
+                        {
+                            "username":"LoneS-",
+                            "comment":"Lorem ipsum"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "username": "eubaek", 
+            "email":"eubaek@gmail.com",
+            "first-name": "Eunbi ",
+            "last-name": "Baek",
+            "top5Lists": [
+                {
+                    "name": "Animals to Eat",
+                    "items": [
+                        "Pig","Cow","Chicken","Turkey","Fish"
+                    ],
+                    "published": true,
+                    "views": 13, 
+                    "likes": 
+                    [
+                        "absaad", "LoneS-"
+                    ],
+                    "dislikes":
+                    [
+                        "eubaek"
+                    ],
+                    "comments":[
+                        {
+                            "username":"LoneS-",
+                            "comment":"Lorem ipsum"
+                        }
+                    ]
+                },
+                {
+                    "name": "Countries you'd like to Visit",
+                    "items": [
+                        "Japan","Iceland","Norway","Sweden","Korea"
+                    ],
+                    "published": true,
+                    "views": 24, 
+                    "likes": 
+                    [
+                        "absaad", "LoneS-"
+                    ],
+                    "dislikes":
+                    [
+                        "eubaek"
+                    ],
+                    "comments":[
+                        {
+                            "username":"LoneS-",
+                            "comment":"Lorem ipsum"
+                        }
+                    ]
+                },
+                {
+                    "name": "Foods",
+                    "items": [
+                        "Chicken","Steak","Ramen","Fried Rice","Sushi"
+                    ],
+                    "published": true,
+                    "views": 74, 
+                    "likes": 
+                    [
+                        "absaad", "LoneS-"
+                    ],
+                    "dislikes":
+                    [
+                        "eubaek"
+                    ],
+                    "comments":[
+                        {
+                            "username":"LoneS-",
+                            "comment":"Lorem ipsum"
+                        }
+                    ]
+                },
+                {
+                    "name": "Games",
+                    "items": [
+                        "CS:GO","Valorant","World Of Tanks","Minecraft","Chess"
+                    ],
+                    "published": true,
+                    "views": 84, 
+                    "likes": 
+                    [
+                        "absaad", "LoneS-"
+                    ],
+                    "dislikes":
+                    [
+                        "eubaek"
+                    ],
+                    "comments":[
+                        {
+                            "username":"LoneS-",
+                            "comment":"Lorem ipsum"
+                        }
+                    ]
+                },
+                {
+                    "name": "Programming Languages",
+                    "items": [
+                        "Python","Java","JavaScript","C++","C"
+                    ],
+                    "published": true,
+                    "views": 45, 
+                    "likes": 
+                    [
+                        "absaad", "LoneS-"
+                    ],
+                    "dislikes":
+                    [
+                        "eubaek"
+                    ],
+                    "comments":[
+                        {
+                            "username":"LoneS-",
+                            "comment":"Lorem ipsum"
+                        }
+                    ]
+                },
+                {
+                    "name": "TV Shows",
+                    "items": [
+                        "Lucifer","Arcane","You","HunterxHunter","Naruto"
+                    ],
+                    "published": true,
+                    "views": 76, 
+                    "likes": 
+                    [
+                        "absaad", "LoneS-"
+                    ],
+                    "dislikes":
+                    [
+                        "eubaek"
+                    ],
+                    "comments":[
+                        {
+                            "username":"LoneS-",
+                            "comment":"Lorem ipsum"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+
+}

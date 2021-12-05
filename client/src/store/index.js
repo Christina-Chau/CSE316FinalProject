@@ -190,7 +190,6 @@ function GlobalStoreContextProvider(props) {
     // RESPONSE TO EVENTS INSIDE OUR COMPONENTS.
 
     store.updateGuest = function (guest) {
-        console.log(guest);
         storeReducer({
           type: GlobalStoreActionType.SET_IS_GUEST,
           payload: guest,
