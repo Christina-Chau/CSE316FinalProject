@@ -23,7 +23,7 @@ export default function LoginScreen() {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
         auth.loginUser(
-            formData.get('email'),
+            formData.get('userName'),
             formData.get('password')
         );
 
@@ -63,7 +63,7 @@ export default function LoginScreen() {
                         Sign in
                     </Typography>
                     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-                        <TextField
+                        {/* <TextField
                             margin="normal"
                             required
                             fullWidth
@@ -72,6 +72,16 @@ export default function LoginScreen() {
                             name="email"
                             autoComplete="email"
                             autoFocus
+                        /> */}
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="userName"
+                            label="User Name"
+                            type="userName"
+                            id="userName"
+                            autoComplete="userName"
                         />
                         <TextField
                             margin="normal"
