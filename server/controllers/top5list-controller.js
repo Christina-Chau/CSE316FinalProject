@@ -138,17 +138,17 @@ getTop5ListPairs = async (req, res) => {
 }
 getTop5Lists = async (req, res) => {
     await Top5List.find({}, (err, top5Lists) => {
-        if (err) {
-            return res.status(400).json({ success: false, error: err })
-        }
-        if (!top5Lists.length) {
-            return res
-                .status(404)
-                .json({ success: false, error: `Top 5 Lists not found` })
-        }
-        return res.status(200).json({ success: true, data: top5Lists })
-    }).catch(err => console.log(err))
-}
+      if (err) {
+        return res.status(400).json({ success: false, error: err });
+      }
+      if (!top5Lists.length) {
+        return res
+          .status(404)
+          .json({ success: false, error: `Top 5 Lists not found` });
+      }
+      return res.status(200).json({ success: true, data: top5Lists });
+    }).catch((err) => console.log(err));
+  };
 updateTop5List = async (req, res) => {
     const body = req.body
     console.log("updateTop5List: " + JSON.stringify(body));

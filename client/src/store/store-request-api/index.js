@@ -14,7 +14,7 @@ import axios from 'axios'
 axios.defaults.withCredentials = true;
 const api = axios.create({
     baseURL: 'http://localhost:4000/api',
-})
+});
 
 // THESE ARE ALL THE REQUESTS WE`LL BE MAKING, ALL REQUESTS HAVE A
 // REQUEST METHOD (like get) AND PATH (like /top5list). SOME ALSO
@@ -22,12 +22,19 @@ const api = axios.create({
 // WORK, AND SOME REQUIRE DATA, WHICH WE WE WILL FORMAT HERE, FOR WHEN
 // WE NEED TO PUT THINGS INTO THE DATABASE OR IF WE HAVE SOME
 // CUSTOM FILTERS FOR QUERIES
-export const createTop5List = (newListName, newItems, userEmail) => {
+export const createTop5List = (newListName, newItems, userEmail, userName) => {
     return api.post(`/top5list/`, {
         // SPECIFY THE PAYLOAD
+        userName, userName,
         name: newListName,
         items: newItems,
-        ownerEmail: userEmail
+        ownerEmail: userEmail,
+        published: false,
+        publishedDate: "none",
+        comments:{},
+        likes: [],
+        dislikes:[],
+        views:0
     })
 }
 export const deleteTop5ListById = (id) => api.delete(`/top5list/${id}`)
@@ -36,9 +43,9 @@ export const getTop5ListPairs = () => api.get(`/top5listpairs/`)
 export const updateTop5ListById = (id, top5List) => {
     return api.put(`/top5list/${id}`, {
         // SPECIFY THE PAYLOAD
-        top5List : top5List
-    })
-}
+        top5List: top5List,
+      });
+};
 
 const apis = {
     createTop5List,
@@ -48,4 +55,4 @@ const apis = {
     updateTop5ListById
 }
 
-export default apis
+export default apis;

@@ -20,6 +20,7 @@ import AddIcon from '@mui/icons-material/Add';
 import Fab from '@mui/material/Fab'
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography'
+import AuthContext from "../auth";
 
 import Grid from "@mui/material/Grid";
 /*
@@ -30,15 +31,40 @@ import Grid from "@mui/material/Grid";
 const HomeScreen = () => {
     const { store } = useContext(GlobalStoreContext);
     const [anchorEl, setAnchorEl] = useState(null);
+    const { auth } = useContext(AuthContext);
     const isMenuOpen = Boolean(anchorEl);
     const [search, setSearch] = useState("");
+    const { innerWidth: width, innerHeight: height } = window;
+    const [editActive, setEditActive] = useState(false);
 
     useEffect(() => {
         store.loadIdNamePairs();
     }, []);
 
-    function handleCreateNewList() {
-        store.createNewList();
+    // let listCard = <List></List>;
+    // if (store.currentLists) {
+    //   listCard = (
+    //     <List sx={{ height: "50%", marginTop: "20px" }}>
+    //       {store.currentLists.map((list) => (
+    //         <ListCard top5List={list} />
+    //       ))}
+    //     </List>
+    //   );
+    // }
+
+    let listCard = <List></List>;
+    console.log(store.currentLists);
+    if (store.currentLists) {
+        listCard = 
+            <List sx={{ width: '90%', left: '5%', bgcolor: 'background.paper' }}>
+            {
+                store.currentLists.map((list) => (
+                    <ListCard
+                    top5List={list}
+                    />
+                ))
+            }
+            </List>;
     }
 
     const handleProfileMenuOpen = (event) => {
@@ -47,102 +73,92 @@ const HomeScreen = () => {
         else
             setAnchorEl(event.currentTarget);
     };
-
-    let listCard = "";
-    if (store) {
-        listCard = 
-            <List sx={{ width: '90%', left: '5%', bgcolor: 'background.paper' }}>
-            {
-                store.idNamePairs.map((pair) => (
-                    <ListCard
-                        key={pair._id}
-                        idNamePair={pair}
-                        selected={false}
-                    />
-                ))
-            }
-            </List>;
-    }
     return (
-        <Grid container spacing={2}>
-       <Grid item xs={10}>
-         <IconButton aria-label="your lists" color="primary"
-            disabled= {store.isGuest ? true : false}
-        >
-           <HomeIcon
-             sx={{
-               width: 40,
-               height: 40,
-             }}
-           />
-         </IconButton>
-         <IconButton aria-label="all lists" color="primary" size="large">
-           <PeopleIcon
-             sx={{
-               width: 40,
-               height: 40,
-             }}
-           />
-         </IconButton>
-         <IconButton aria-label="user lists" color="primary" size="large">
-           <PersonIcon
-             sx={{
-               width: 40,
-               height: 40,
-             }}
-           />
-         </IconButton>
-         <IconButton aria-label="community lists" color="primary" size="large">
-           <FunctionsIcon
-             sx={{
-               width: 40,
-               height: 40,
-             }}
-           />
-         </IconButton>
-         <TextField
-           sx={{width:"50%"}}
-           margin="normal"
-           id={"search"}
-           name="search"
-           align= "center"
-           inputProps={{ style: { fontSize: 18 } }}
-           InputLabelProps={{ style: { fontSize: 18 } }}
-         />
-       </Grid>
-       <Grid item xs={2} align='right'>
-         <Typography display="inline" >
-           Sort by
-         </Typography>
-        <IconButton aria-label="sort" color="primary" size="large" onClick={handleProfileMenuOpen}>
-            <SortIcon
+        <div>
+            <Grid container spacing={2}>
+        <Grid item xs={10}>
+            <IconButton aria-label="your lists" color="primary"
+                disabled= {store.guest ? true : false}
+            >
+            <HomeIcon
                 sx={{
                 width: 40,
                 height: 40,
                 }}
             />
-            <Menu
-                anchorEl={anchorEl}
-                // anchorOrigin={{
-                //     vertical: 'top',
-                //     horizontal: 'right',
-                // }}
-                keepMounted
-                transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
+            </IconButton>
+            <IconButton aria-label="all lists" color="primary" size="large">
+            <PeopleIcon
+                sx={{
+                width: 40,
+                height: 40,
                 }}
-                open={isMenuOpen}
-            >
-                <MenuItem id = "sortItem" onClick={handleProfileMenuOpen}><Link to='/'>Publish Date (Newest)</Link></MenuItem>
-                <MenuItem id = "sortItem" onClick={handleProfileMenuOpen}><Link to='/'>Publish Date (Oldest)</Link></MenuItem>
-                <MenuItem id = "sortItem" onClick={handleProfileMenuOpen}><Link to='/'>Views</Link></MenuItem>
-                <MenuItem id = "sortItem" onClick={handleProfileMenuOpen}><Link to='/'>Likes</Link></MenuItem>
-                <MenuItem id = "sortItem" onClick={handleProfileMenuOpen}><Link to='/'>Dislikes</Link></MenuItem>
-            </Menu>
-        </IconButton>
-       </Grid>
-     </Grid>
+            />
+            </IconButton>
+            <IconButton aria-label="user lists" color="primary" size="large">
+            <PersonIcon
+                sx={{
+                width: 40,
+                height: 40,
+                }}
+            />
+            </IconButton>
+            <IconButton aria-label="community lists" color="primary" size="large">
+            <FunctionsIcon
+                sx={{
+                width: 40,
+                height: 40,
+                }}
+            />
+            </IconButton>
+            <TextField
+            sx={{width:"50%"}}
+            margin="normal"
+            id={"search"}
+            name="search"
+            align= "center"
+            inputProps={{ style: { fontSize: 18 } }}
+            InputLabelProps={{ style: { fontSize: 18 } }}
+            />
+        </Grid>
+        <Grid item xs={2} align='right'>
+            <Typography display="inline" >
+            Sort by
+            </Typography>
+            <IconButton aria-label="sort" color="primary" size="large" onClick={handleProfileMenuOpen}>
+                <SortIcon
+                    sx={{
+                    width: 40,
+                    height: 40,
+                    }}
+                />
+                <Menu
+                    anchorEl={anchorEl}
+                    // anchorOrigin={{
+                    //     vertical: 'top',
+                    //     horizontal: 'right',
+                    // }}
+                    keepMounted
+                    transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                    }}
+                    open={isMenuOpen}
+                >
+                    <MenuItem id = "sortItem" onClick={handleProfileMenuOpen}><Link to='/'>Publish Date (Newest)</Link></MenuItem>
+                    <MenuItem id = "sortItem" onClick={handleProfileMenuOpen}><Link to='/'>Publish Date (Oldest)</Link></MenuItem>
+                    <MenuItem id = "sortItem" onClick={handleProfileMenuOpen}><Link to='/'>Views</Link></MenuItem>
+                    <MenuItem id = "sortItem" onClick={handleProfileMenuOpen}><Link to='/'>Likes</Link></MenuItem>
+                    <MenuItem id = "sortItem" onClick={handleProfileMenuOpen}><Link to='/'>Dislikes</Link></MenuItem>
+                </Menu>
+            </IconButton>
+        </Grid>
+        </Grid>
+        <div>
+            {listCard}
+            <MUIDeleteModal />
+        </div>
+    </div>
    );
 }
 

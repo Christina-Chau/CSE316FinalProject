@@ -1,11 +1,19 @@
-import { useContext, useState } from 'react'
-import { GlobalStoreContext } from '../store'
-import Box from '@mui/material/Box';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import IconButton from '@mui/material/IconButton';
-import ListItem from '@mui/material/ListItem';
-import TextField from '@mui/material/TextField';
+import { useContext, useState } from "react";
+ import { GlobalStoreContext } from "../store";
+ import Box from "@mui/material/Box";
+ import DeleteIcon from "@mui/icons-material/Delete";
+ import EditIcon from "@mui/icons-material/Edit";
+ import IconButton from "@mui/material/IconButton";
+ import ListItem from "@mui/material/ListItem";
+ import TextField from "@mui/material/TextField";
+ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+ import ThumbDownIcon from "@mui/icons-material/ThumbDown";
+ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+ import List from "@mui/material/List";
+
+ import { Typography } from "@mui/material";
+import Grid from "@mui/material/Grid";
 
 /*
     This is a card in our list of top 5 lists. It lets select
@@ -15,23 +23,51 @@ import TextField from '@mui/material/TextField';
     @author McKilla Gorilla
 */
 function ListCard(props) {
-    const { store } = useContext(GlobalStoreContext);
-    const [editActive, setEditActive] = useState(false);
-    const [text, setText] = useState("");
-    const { idNamePair, selected } = props;
+  const { store } = useContext(GlobalStoreContext);
+  const [editActive, setEditActive] = useState(false);
+  const [text, setText] = useState("");
+  const { top5List } = props;
+  // const { idNamePair, selected } = props;
+
+     //list expand
+    const [expanded, setExpanded] = useState(false);
+
+    //comments
+    //const [comment, setComment] = useState("");
+
+    // function handleLoadList(event, id) {
+    //   console.log("handleLoadList for " + id);
+    //   if (!event.target.disabled) {
+    //     let _id = event.target.id;
+    //     if (_id.indexOf("list-card-text-") >= 0)
+    //       _id = ("" + _id).substring("list-card-text-".length);
+ 
+    //     console.log("load " + event.target.id);
+ 
+    //     // CHANGE THE CURRENT LIST
+    //     store.setCurrentList(id);
+    //   }
+    // }
 
     function handleLoadList(event, id) {
-        console.log("handleLoadList for " + id);
-        if (!event.target.disabled) {
-            let _id = event.target.id;
-            if (_id.indexOf('list-card-text-') >= 0)
-                _id = ("" + _id).substring("list-card-text-".length);
+      console.log("handleLoadList for " + id);
+      if (!event.target.disabled) {
+          let _id = event.target.id;
+          if (_id.indexOf('list-card-text-') >= 0)
+              _id = ("" + _id).substring("list-card-text-".length);
 
-            console.log("load " + event.target.id);
+          console.log("load " + event.target.id);
 
-            // CHANGE THE CURRENT LIST
-            store.setCurrentList(id);
-        }
+          // CHANGE THE CURRENT LIST
+          store.setCurrentList(id);
+      }
+  }
+
+    function handleOpenList(event, id) {
+        event.stopPropagation();
+        let ex = !expanded;
+        setExpanded(ex);
+        handleLoadList(event, top5List._id);
     }
 
     function handleToggleEdit(event) {
@@ -64,67 +100,219 @@ function ListCard(props) {
     function handleUpdateText(event) {
         setText(event.target.value);
     }
-
-    let selectClass = "unselected-list-card";
-    if (selected) {
-        selectClass = "selected-list-card";
+    function handleLike(event) {
+      
     }
+
+    function handleDislike(event){
+
+    }
+
     let cardStatus = false;
     if (store.isListNameEditActive) {
         cardStatus = true;
     }
-    let cardElement =
-        <ListItem
-            id={idNamePair._id}
-            key={idNamePair._id}
-            sx={{ marginTop: '15px', display: 'flex', p: 1 }}
-            style={{ width: '100%' }}
-            button
-            onClick={(event) => {
-                handleLoadList(event, idNamePair._id)
-            }
-            }
-            style={{
-                fontSize: '48pt'
-            }}
-        >
-                <Box sx={{ p: 1, flexGrow: 1 }}>{idNamePair.name}</Box>
-                <Box sx={{ p: 1 }}>
-                    <IconButton onClick={handleToggleEdit} aria-label='edit'>
-                        <EditIcon style={{fontSize:'48pt'}} />
-                    </IconButton>
-                </Box>
-                <Box sx={{ p: 1 }}>
-                    <IconButton onClick={(event) => {
-                        handleDeleteList(event, idNamePair._id)
-                    }} aria-label='delete'>
-                        <DeleteIcon style={{fontSize:'48pt'}} />
-                    </IconButton>
-                </Box>
-        </ListItem>
 
-    if (editActive) {
-        cardElement =
-            <TextField
-                margin="normal"
-                required
-                fullWidth
-                id={"list-" + idNamePair._id}
-                label="Top 5 List Name"
-                name="name"
-                autoComplete="Top 5 List Name"
-                className='list-card'
-                onKeyPress={handleKeyPress}
-                onChange={handleUpdateText}
-                defaultValue={idNamePair.name}
-                inputProps={{style: {fontSize: 48}}}
-                InputLabelProps={{style: {fontSize: 24}}}
-                autoFocus
-            />
-    }
-    return (
-        cardElement
+    let items = (
+      <List
+        sx={{
+          border: 2,
+          borderRadius: 8,
+          width: "100%",
+        }}
+      >
+        {top5List.items.map((item, index) => (
+          <ListItem>
+            <Typography>{index + 1 + ". " + item}</Typography>
+          </ListItem>
+        ))}
+      </List>
     );
-}
+
+    let cardElement = (
+      <ListItem
+        id={top5List._id}
+        key={top5List._id}
+        sx={{
+          border: 2,
+          borderRadius: 8,
+          width: "90%",
+          margin: "auto",
+          marginTop: "15px",
+          display: "flex",
+          p: 1,
+          bgcolor: "white",
+        }}
+        style={{ width: "100%" }}
+        style={{
+          fontSize: "16pt",
+        }}
+      >
+        <Grid container spacing={2}>
+          <Grid item xs={9}>
+            <Typography display="inline" style={{ fontSize: "20pt" }}>
+              {top5List.name}
+            </Typography>
+          </Grid>
+          <Grid item xs={1}>
+            <IconButton
+              aria-label="like"
+              color="primary"
+              onClick={(event) => {
+                handleLike(event);
+              }}
+            >
+              <ThumbUpIcon style={{ fontSize: "20pt" }} />
+            </IconButton>
+            {/* <Typography display="inline">{top5List.likes.length}</Typography> */}
+          </Grid>
+          <Grid item xs={1}>
+            <IconButton
+              aria-label="like"
+              color="primary"
+              onClick={(event) => {
+                handleDislike(event);
+              }}
+            >
+              <ThumbDownIcon style={{ fontSize: "20pt" }} />
+            </IconButton>
+            {/* <Typography display="inline">{top5List.dislikes.length}</Typography> */}
+          </Grid>
+          <Grid item xs={1}>
+            <IconButton
+              onClick={(event) => {
+                handleDeleteList(event, top5List._id);
+              }}
+              aria-label="delete"
+            >
+              <DeleteIcon style={{ fontSize: "20pt" }} />
+            </IconButton>
+          </Grid>
+          <Grid item xs={9}>
+            <Typography display="inline">{"By: " + top5List.username}</Typography>
+          </Grid>
+          <Grid item xs={3}>
+            <Typography display="inline">{"Views: " + top5List.views}</Typography>
+          </Grid>
+          <Grid item xs={11}>
+            <Typography display="inline">
+              {"Published: " + top5List.publishedDate}
+            </Typography>
+          </Grid>
+          <Grid item xs={1}>
+            <IconButton
+              aria-label="like"
+              color="primary"
+              onClick={(event) => {
+                handleOpenList(event);
+              }}
+            >
+              <KeyboardArrowDownIcon style={{ fontSize: "20pt" }} />
+            </IconButton>
+          </Grid>
+        </Grid>
+      </ListItem>
+    );
+    if (expanded) {
+      cardElement = (
+        <ListItem
+          id={top5List._id}
+          key={top5List._id}
+          sx={{
+            border: 2,
+            borderRadius: 8,
+            width: "90%",
+            margin: "auto",
+            marginTop: "15px",
+            display: "flex",
+            p: 1,
+            bgcolor: "white",
+          }}
+          style={{ width: "100%" }}
+          style={{
+            fontSize: "16pt",
+          }}
+        >
+          <Grid container spacing={2}>
+            <Grid item xs={9}>
+              <Typography display="inline" style={{ fontSize: "20pt" }}>
+                {top5List.name}
+              </Typography>
+            </Grid>
+            <Grid item xs={1}>
+              <IconButton
+                aria-label="like"
+                color="primary"
+                onClick={(event) => {
+                  handleLike(event);
+                }}
+              >
+                <ThumbUpIcon style={{ fontSize: "20pt" }} />
+              </IconButton>
+              {/* <Typography display="inline">{top5List.likes.length}</Typography> */}
+            </Grid>
+            <Grid item xs={1}>
+              <IconButton
+                aria-label="like"
+                color="primary"
+                onClick={(event) => {
+                  handleDislike(event);
+                }}
+              >
+                <ThumbDownIcon style={{ fontSize: "20pt" }} />
+              </IconButton>
+              {/* <Typography display="inline">{top5List.dislikes.length}</Typography> */}
+            </Grid>
+            <Grid item xs={1}>
+              <IconButton
+                onClick={(event) => {
+                  handleDeleteList(event, top5List._id);
+                }}
+                aria-label="delete"
+              >
+                <DeleteIcon style={{ fontSize: "20pt" }} />
+              </IconButton>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography display="inline">
+                {"By: " + top5List.username}
+              </Typography>
+            </Grid>
+ 
+            <Grid item xs={6}>
+              {items}
+            </Grid>
+            {/* <Grid item xs={6}>
+              {comments}
+            </Grid> */}
+ 
+            <Grid item xs={9}>
+              <Typography display="inline">
+                {"Published: " + top5List.publishedDate}
+              </Typography>
+            </Grid>
+            <Grid item xs={2}>
+              <Typography display="inline">
+                {"Views: " + top5List.views}
+              </Typography>
+            </Grid>
+ 
+            <Grid item xs={1}>
+              <IconButton
+                aria-label="like"
+                color="primary"
+                onClick={(event) => {
+                  handleOpenList(event);
+                }}
+              >
+                <KeyboardArrowUpIcon style={{ fontSize: "20pt" }} />
+              </IconButton>
+            </Grid>
+          </Grid>
+        </ListItem>
+      );
+    }
+    return cardElement;
+  }
 
 export default ListCard;

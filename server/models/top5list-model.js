@@ -3,10 +3,10 @@ const Schema = mongoose.Schema
 
 const Top5ListSchema = new Schema(
     {
-        username: { type: String, required: true },
+        userName: { type: String, required: true },
+        name: {type: String, required: true},
         items: { type: [String], required: true },
         ownerEmail: { type: String },
-        username: {type: String, required: true},
         published: { type: Boolean, required: true },
         publishedDate: { type: String, required: true },
         comments: { type: Map, of: String, required: true },

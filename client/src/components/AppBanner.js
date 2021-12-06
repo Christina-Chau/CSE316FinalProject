@@ -55,7 +55,7 @@ export default function AppBanner() {
         </Menu>        
 
     let editToolbar = "";
-    let menu = "";
+    let menu;
     if (auth.loggedIn) {
         menu  = loggedInMenu;
         if (store.currentList) {
@@ -66,10 +66,15 @@ export default function AppBanner() {
     function getAccountMenu(loggedIn) {
         let userInitials = auth.getUserInitials();
         console.log("userInitials: " + userInitials);
-        if (loggedIn) 
+        if (loggedIn) {
+            console.log(loggedIn);
             return <div>{userInitials}</div>;
+        }
+        else if(store.isGuest){
+            return <AccountCircle/>
+        }
         else
-            return null;
+             return null;
     }
 
     return (
