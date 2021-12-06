@@ -14,6 +14,7 @@ import { useContext, useState } from "react";
 
  import { Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
+import AuthContext from "../auth";
 
 /*
     This is a card in our list of top 5 lists. It lets select
@@ -24,10 +25,12 @@ import Grid from "@mui/material/Grid";
 */
 function ListCard(props) {
   const { store } = useContext(GlobalStoreContext);
+  const { auth } = useContext(AuthContext);
   const [editActive, setEditActive] = useState(false);
   const [text, setText] = useState("");
-  //const { top5List } = props;
-   const { idNamePair, selected } = props;
+  const { top5List } = props;
+  //const { idNamePair, selected } = props;
+  const [comment, setComment] = useState("");
 
      //list expand
     const [expanded, setExpanded] = useState(false);
@@ -64,10 +67,12 @@ function ListCard(props) {
   }
 
     function handleOpenList(event, id) {
-        event.stopPropagation();
-        let ex = !expanded;
-        setExpanded(ex);
-        handleLoadList(event, idNamePair._id);
+      event.stopPropagation();
+      let ex = !expanded;
+      setExpanded(ex);
+      if (ex) {
+        store.updateView(top5List);
+      }
     }
 
     function handleToggleEdit(event) {
@@ -83,29 +88,41 @@ function ListCard(props) {
         setEditActive(newActive);
     }
 
+    function handleEditList(event) {
+      event.stopPropagation();
+      store.setCurrentList(top5List._id);
+    }
+
     async function handleDeleteList(event, id) {
         event.stopPropagation();
-        let _id = event.target.id;
-        _id = ("" + _id).substring("delete-list-".length);
+        // let _id = event.target.id;
+        // _id = ("" + _id).substring("delete-list-".length);
         store.markListForDeletion(id);
+    }
+
+    function handleNewComment(event) {
+      setComment(event.target.value);
     }
 
     function handleKeyPress(event) {
         if (event.code === "Enter") {
             let id = event.target.id.substring("list-".length);
-            store.changeListName(id, text);
-            toggleEdit();
+            store.comment(top5List, text);
+            setComment("");
         }
     }
     function handleUpdateText(event) {
         setText(event.target.value);
     }
+
     function handleLike(event) {
-      
+      event.stopPropagation();
+      store.updateLikes(top5List);
     }
 
     function handleDislike(event){
-
+      event.stopPropagation();
+      store.updateDislikes(top5List);
     }
 
     let cardStatus = false;
@@ -113,10 +130,116 @@ function ListCard(props) {
         cardStatus = true;
     }
 
+    let likeDis = false;
+    let dislikeDis = false;
+    let commentDis = false;
+    let deleteDis = false;
+
+    let items = (
+      <List
+        sx={{
+          border: 2,
+          borderRadius: 8,
+          width: "100%",
+          bgcolor: "#9595f6",
+        }}
+      >
+        {top5List.items.map((item, index) => (
+          <ListItem key={index}>
+            <Typography>{index + 1 + ". " + item}</Typography>
+          </ListItem>
+        ))}
+      </List>
+    );
+
+  let strings = Object.keys(top5List.comments);
+  let users = Object.values(top5List.comments);
+
+  let comments = (
+    <Box>
+      <List
+        sx={{
+          width: "100%",
+          bgcolor: "background.paper",
+          position: "relative",
+          overflow: "auto",
+          maxHeight: 200,
+        }}
+      >
+        {users.map((user, index) => (
+          <ListItem
+            key={index}
+            sx={{
+              border: 2,
+              borderRadius: 8,
+              bgcolor: "#9595f6",
+              width: "100%",
+              marginTop: "2px",
+            }}
+          >
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Typography display="inline" style={{ fontSize: "12pt" }}>
+                  {user}
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography display="inline" style={{ fontSize: "12pt" }}>
+                  {strings[index]}
+                </Typography>
+              </Grid>
+            </Grid>
+          </ListItem>
+        ))}
+      </List>
+      <Box
+        sx={{
+          border: 2,
+          borderRadius: 2,
+          width: "100%",
+          marginTop: "12px",
+        }}
+      >
+        <TextField
+          label="Comment"
+          sx={{ width: "100%" }}
+          margin="normal"
+          id={"comment"}
+          name="comment"
+          disabled={commentDis}
+          onKeyPress={handleKeyPress}
+          onChange={handleNewComment}
+          value={comment}
+          inputProps={{ style: { fontSize: 14 } }}
+          InputLabelProps={{ style: { fontSize: 14 } }}
+        />
+      </Box>
+    </Box>
+  );
+
+    if (store.isGuest) {
+      likeDis = true;
+      dislikeDis = true;
+      commentDis = true;
+      deleteDis = true;
+    }
+    else{
+      if (
+        store.listView === "community" ||
+        auth.user.userName !== top5List.username
+      ) {
+        deleteDis = true;
+      }
+      if (store.listView !== "community" && !top5List.published) {
+        likeDis = true;
+        dislikeDis= true;
+        commentDis = true;
+      }
+    }
     let cardElement = (
       <ListItem
-        id={idNamePair._id}
-        key={idNamePair._id}
+        id={top5List._id}
+        key={top5List._id}
         sx={{
           border: 2,
           borderRadius: 8,
@@ -134,7 +257,7 @@ function ListCard(props) {
         <Grid container spacing={2}>
           <Grid item xs={9}>
             <Typography display="inline" style={{ fontSize: "20pt" }}>
-              {idNamePair.name}
+              {top5List.name}
             </Typography>
           </Grid>
           <Grid item xs={1}>
@@ -147,7 +270,7 @@ function ListCard(props) {
             >
               <ThumbUpIcon style={{ fontSize: "20pt" }} />
             </IconButton>
-            {/* <Typography display="inline">{top5List.likes.length}</Typography> */}
+            <Typography display="inline">{top5List.likes.length}</Typography>
           </Grid>
           <Grid item xs={1}>
             <IconButton
@@ -159,28 +282,28 @@ function ListCard(props) {
             >
               <ThumbDownIcon style={{ fontSize: "20pt" }} />
             </IconButton>
-            {/* <Typography display="inline">{top5List.dislikes.length}</Typography> */}
+            <Typography display="inline">{top5List.dislikes.length}</Typography>
           </Grid>
           <Grid item xs={1}>
             <IconButton
-              // onClick={(event) => {
-              //   handleDeleteList(event, top5List._id);
-              // }}
+              onClick={(event) => {
+                handleDeleteList(event, top5List._id);
+              }}
               aria-label="delete"
             >
               <DeleteIcon style={{ fontSize: "20pt" }} />
             </IconButton>
           </Grid>
           <Grid item xs={9}>
-            {/* <Typography display="inline">{"By: " + top5List.username}</Typography> */}
+            <Typography display="inline">{"By: " + top5List.userName}</Typography>
           </Grid>
           <Grid item xs={3}>
-            {/* <Typography display="inline">{"Views: " + top5List.views}</Typography> */}
+            <Typography display="inline">{"Views: " + top5List.views}</Typography>
           </Grid>
           <Grid item xs={11}>
-            {/* <Typography display="inline">
+            <Typography display="inline">
               {"Published: " + top5List.publishedDate}
-            </Typography> */}
+            </Typography>
           </Grid>
           <Grid item xs={1}>
             <IconButton
@@ -199,8 +322,8 @@ function ListCard(props) {
     if (expanded) {
       cardElement = (
         <ListItem
-          id={idNamePair._id}
-          key={idNamePair._id}
+          id={top5List._id}
+          key={top5List._id}
           sx={{
             border: 2,
             borderRadius: 8,
@@ -218,37 +341,37 @@ function ListCard(props) {
           <Grid container spacing={2}>
             <Grid item xs={9}>
               <Typography display="inline" style={{ fontSize: "20pt" }}>
-                {idNamePair.name}
+                {top5List.name}
               </Typography>
             </Grid>
             <Grid item xs={1}>
               <IconButton
                 aria-label="like"
                 color="primary"
-                // onClick={(event) => {
-                //   handleLike(event);
-                // }}
+                onClick={(event) => {
+                  handleLike(event);
+                }}
               >
                 <ThumbUpIcon style={{ fontSize: "20pt" }} />
               </IconButton>
-              {/* <Typography display="inline">{top5List.likes.length}</Typography> */}
+              <Typography display="inline">{top5List.likes.length}</Typography>
             </Grid>
             <Grid item xs={1}>
               <IconButton
                 aria-label="like"
                 color="primary"
-                // onClick={(event) => {
-                //   handleDislike(event);
-                // }}
+                onClick={(event) => {
+                  handleDislike(event);
+                }}
               >
                 <ThumbDownIcon style={{ fontSize: "20pt" }} />
               </IconButton>
-              {/* <Typography display="inline">{top5List.dislikes.length}</Typography> */}
+              <Typography display="inline">{top5List.dislikes.length}</Typography>
             </Grid>
             <Grid item xs={1}>
               <IconButton
                 onClick={(event) => {
-                  handleDeleteList(event, idNamePair._id);
+                  handleDeleteList(event, top5List._id);
                 }}
                 aria-label="delete"
               >
@@ -256,27 +379,27 @@ function ListCard(props) {
               </IconButton>
             </Grid>
             <Grid item xs={12}>
-              {/* <Typography display="inline">
-                {"By: " + top5List.username}
-              </Typography> */}
+              <Typography display="inline">
+                {"By: " + top5List.userName}
+              </Typography>
             </Grid>
  
-            {/* <Grid item xs={6}>
+            <Grid item xs={6}>
               {items}
             </Grid>
             <Grid item xs={6}>
               {comments}
-            </Grid> */}
+            </Grid>
  
             <Grid item xs={9}>
-              {/* <Typography display="inline">
+              <Typography display="inline">
                 {"Published: " + top5List.publishedDate}
-              </Typography> */}
+              </Typography>
             </Grid>
             <Grid item xs={2}>
-              {/* <Typography display="inline">
+              <Typography display="inline">
                 {"Views: " + top5List.views}
-              </Typography> */}
+              </Typography>
             </Grid>
  
             <Grid item xs={1}>

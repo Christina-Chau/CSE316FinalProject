@@ -79,12 +79,12 @@ const HomeScreen = () => {
     }
 
     function handleSortList(sort){
-        //store.sortLists(sort);
+        store.sortLists(sort);
 
     }
 
     function displayList(listType){
-        //store.displayScreen(listType);
+        store.displayScreen(listType);
     }
 
     const handleProfileMenuOpen = (event) => {
