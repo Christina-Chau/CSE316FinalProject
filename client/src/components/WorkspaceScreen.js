@@ -3,6 +3,10 @@ import Top5Item from './Top5Item.js'
 import List from '@mui/material/List';
 import { Typography } from '@mui/material'
 import { GlobalStoreContext } from '../store/index.js'
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+
 /*
     This React component lets us edit a loaded list, which only
     happens when we are on the proper route.
@@ -38,6 +42,35 @@ function WorkspaceScreen() {
                     <div className="item-number"><Typography variant="h3">5.</Typography></div>
                 </div>
                 {editItems}
+            </div>
+            <div>
+            <Grid container spacing={2}>
+        <Grid item xs={10}></Grid>
+        <Grid item xs={2}>
+          <Button
+            variant="contained"
+            color="success"
+            size="large"
+            sx={{ mt: 2, minHeight: "75px" }}
+            // onClick={(event) => {
+            //   handleSave();
+            // }}
+          >
+            Save
+          </Button>
+          <Button
+            variant="contained"
+            color="success"
+            size="large"
+            sx={{ mt: 2, minHeight: "75px" }}
+            // onClick={(event) => {
+            //   handlePublish();
+            // }}
+          >
+            Publish
+          </Button>
+        </Grid>
+      </Grid>    
             </div>
         </div>
     )

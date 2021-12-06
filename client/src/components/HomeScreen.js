@@ -41,6 +41,16 @@ const HomeScreen = () => {
         store.loadIdNamePairs();
     }, []);
 
+    function handleUpdateSearch(event) {
+        setSearch(event.target.value);
+     }
+     function handleKeyPress(event) {
+       if (event.code === "Enter") {
+         let text = event.target.value;
+         // store.newSearch(text);
+        }
+      }
+
     // let listCard = <List></List>;
     // if (store.currentLists) {
     //   listCard = (
@@ -52,19 +62,29 @@ const HomeScreen = () => {
     //   );
     // }
 
-    let listCard = <List></List>;
-    console.log(store.currentLists);
-    if (store.currentLists) {
+    let listCard = "";
+    if (store) {
         listCard = 
-            <List sx={{ width: '90%', left: '5%', bgcolor: 'background.paper' }}>
+            <List sx={{ width: '90%', left: '5%'}}>
             {
-                store.currentLists.map((list) => (
+                store.idNamePairs.map((pair) => (
                     <ListCard
-                    top5List={list}
+                        key={pair._id}
+                        idNamePair={pair}
+                        selected={false}
                     />
                 ))
             }
             </List>;
+    }
+
+    function handleSortList(sort){
+        //store.sortLists(sort);
+
+    }
+
+    function displayList(listType){
+        //store.displayScreen(listType);
     }
 
     const handleProfileMenuOpen = (event) => {
@@ -73,12 +93,14 @@ const HomeScreen = () => {
         else
             setAnchorEl(event.currentTarget);
     };
+    
     return (
         <div>
             <Grid container spacing={2}>
         <Grid item xs={10}>
             <IconButton aria-label="your lists" color="primary"
                 disabled= {store.guest ? true : false}
+                onClick = {displayList("home")}
             >
             <HomeIcon
                 sx={{
@@ -87,7 +109,7 @@ const HomeScreen = () => {
                 }}
             />
             </IconButton>
-            <IconButton aria-label="all lists" color="primary" size="large">
+            <IconButton aria-label="all lists" color="primary" size="large" onClick = {displayList("all")}>
             <PeopleIcon
                 sx={{
                 width: 40,
@@ -95,7 +117,7 @@ const HomeScreen = () => {
                 }}
             />
             </IconButton>
-            <IconButton aria-label="user lists" color="primary" size="large">
+            <IconButton aria-label="user lists" color="primary" size="large" onClick = {displayList("user")}>
             <PersonIcon
                 sx={{
                 width: 40,
@@ -103,7 +125,7 @@ const HomeScreen = () => {
                 }}
             />
             </IconButton>
-            <IconButton aria-label="community lists" color="primary" size="large">
+            <IconButton aria-label="community lists" color="primary" size="large" onClick = {displayList("community")}>
             <FunctionsIcon
                 sx={{
                 width: 40,
@@ -116,6 +138,8 @@ const HomeScreen = () => {
             margin="normal"
             id={"search"}
             name="search"
+            onKeyPress={handleKeyPress}
+            onChange={handleUpdateSearch}
             align= "center"
             inputProps={{ style: { fontSize: 18 } }}
             InputLabelProps={{ style: { fontSize: 18 } }}
@@ -145,11 +169,11 @@ const HomeScreen = () => {
                     }}
                     open={isMenuOpen}
                 >
-                    <MenuItem id = "sortItem" onClick={handleProfileMenuOpen}><Link to='/'>Publish Date (Newest)</Link></MenuItem>
-                    <MenuItem id = "sortItem" onClick={handleProfileMenuOpen}><Link to='/'>Publish Date (Oldest)</Link></MenuItem>
-                    <MenuItem id = "sortItem" onClick={handleProfileMenuOpen}><Link to='/'>Views</Link></MenuItem>
-                    <MenuItem id = "sortItem" onClick={handleProfileMenuOpen}><Link to='/'>Likes</Link></MenuItem>
-                    <MenuItem id = "sortItem" onClick={handleProfileMenuOpen}><Link to='/'>Dislikes</Link></MenuItem>
+                    <MenuItem id = "sortItem" onClick={handleSortList("newDate")}>Publish Date (Newest)</MenuItem>
+                    <MenuItem id = "sortItem" onClick={handleSortList("oldDate")}>Publish Date (Oldest)</MenuItem>
+                    <MenuItem id = "sortItem" onClick={handleSortList("views")}>Views</MenuItem>
+                    <MenuItem id = "sortItem" onClick={handleSortList("likes")}>Likes</MenuItem>
+                    <MenuItem id = "sortItem" onClick={handleSortList("dislikes")}>Dislikes</MenuItem>
                 </Menu>
             </IconButton>
         </Grid>

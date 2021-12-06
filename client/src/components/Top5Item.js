@@ -90,22 +90,6 @@ function Top5Item(props) {
             <ListItem
                 id={'item-' + (index+1)}
                 className={itemClass}
-                onDragStart={(event) => {
-                    handleDragStart(event, (index+1))
-                }}
-                onDragOver={(event) => {
-                    handleDragOver(event, (index+1))
-                }}
-                onDragEnter={(event) => {
-                    handleDragEnter(event, (index+1))
-                }}
-                onDragLeave={(event) => {
-                    handleDragLeave(event, (index+1))
-                }}
-                onDrop={(event) => {
-                    handleDrop(event, (index+1))
-                }}
-                draggable="true"
                 sx={{ display: 'flex', p: 1 }}
                 style={{ width: '100%' }}
                 style={{

@@ -29,7 +29,8 @@ export const GlobalStoreActionType = {
     SET_ITEM_EDIT_ACTIVE: "SET_ITEM_EDIT_ACTIVE",
     SET_LIST_NAME_EDIT_ACTIVE: "SET_LIST_NAME_EDIT_ACTIVE", 
     SET_IS_GUEST: "SET_IS_GUEST",
-    SET_CURRENT_LISTS: "SET_CURRENT_LISTS"
+    SET_CURRENT_LISTS: "SET_CURRENT_LISTS", 
+    SET_LIST_VIEW:"SET_LIST_VIEW"
 }
 
 // WE'LL NEED THIS TO PROCESS TRANSACTIONS
@@ -47,7 +48,8 @@ function GlobalStoreContextProvider(props) {
         itemActive: false,
         isGuest: false, 
         listMarkedForDeletion: null,
-        currentLists: null
+        currentLists: null, 
+        listView: "you"
     });
     const history = useHistory();
 
@@ -72,7 +74,8 @@ function GlobalStoreContextProvider(props) {
                     isItemEditActive: false,
                     isGuest: store.isGuest,
                     listMarkedForDeletion: null,
-                    currentLists: store.currentLists
+                    listView: store.listView,
+                    currentLists: payload.currentLists
                 });
             }
             // STOP EDITING THE CURRENT LIST
@@ -85,6 +88,7 @@ function GlobalStoreContextProvider(props) {
                     isItemEditActive: false,
                     isGuest: store.isGuest,
                     currentLists: store.currentLists,
+                    listView: store.listView,
                     listMarkedForDeletion: null
                 })
             }
@@ -98,6 +102,7 @@ function GlobalStoreContextProvider(props) {
                     isItemEditActive: false,
                     isGuest: store.isGuest,
                     currentLists: store.currentLists,
+                    listView: store.listView,
                     listMarkedForDeletion: null
                 })
             }
@@ -111,6 +116,7 @@ function GlobalStoreContextProvider(props) {
                     isItemEditActive: false,
                     isGuest: store.isGuest,
                     currentLists: store.currentLists,
+                    listView: store.listView,
                     listMarkedForDeletion: null
                 });
             }
@@ -124,6 +130,7 @@ function GlobalStoreContextProvider(props) {
                     isItemEditActive: false,
                     isGuest: store.isGuest,
                     currentLists: store.currentLists,
+                    listView: store.listView,
                     listMarkedForDeletion: payload
                 });
             }
@@ -137,11 +144,12 @@ function GlobalStoreContextProvider(props) {
                     isItemEditActive: false,
                     isGuest: store.isGuest,
                     currentLists: store.currentLists,
+                    listView: store.listView,
                     listMarkedForDeletion: null
                 });
             }
             // UPDATE A LIST
-            case GlobalStoreActionType.SET_CURRENT_LISTS: {
+            case GlobalStoreActionType.SET_CURRENT_LIST: {
                 return setStore({
                     idNamePairs: store.idNamePairs,
                     currentList: payload,
@@ -150,6 +158,21 @@ function GlobalStoreContextProvider(props) {
                     isItemEditActive: false,
                     isGuest: store.isGuest,
                     currentLists: store.currentLists,
+                    listView: store.listView,
+                    listMarkedForDeletion: null
+                });
+            }
+
+            case GlobalStoreActionType.SET_CURRENT_LISTS: {
+                return setStore({
+                    idNamePairs: store.idNamePairs,
+                    currentList: store.currentList,
+                    newListCounter: store.newListCounter,
+                    isListNameEditActive: false,
+                    isItemEditActive: false,
+                    isGuest: store.isGuest,
+                    currentLists: payload.top5Lists,
+                    listView: store.listView,
                     listMarkedForDeletion: null
                 });
             }
@@ -163,6 +186,7 @@ function GlobalStoreContextProvider(props) {
                     isItemEditActive: true,
                     isGuest: store.isGuest,
                     currentLists: store.currentLists,
+                    listView: store.listView,
                     listMarkedForDeletion: null
                 });
             }
@@ -176,6 +200,7 @@ function GlobalStoreContextProvider(props) {
                     isItemEditActive: false,
                     isGuest: store.isGuest,
                     currentLists: store.currentLists,
+                    listView: store.listView,
                     listMarkedForDeletion: null
                 });
             }
@@ -187,12 +212,11 @@ function GlobalStoreContextProvider(props) {
                   isListNameEditActive: store.isListNameEditActive,
                   isItemEditActive: store.isItemEditActive,
                   listMarkedForDeletion: store.listMarkedForDeletion,
-                  currentLists: store.currentLists,
+                  currentLists: null,
                   isGuest: payload
                 });
               }
-
-              case GlobalStoreActionType.SET_CURRENT_LISTS: {
+              case GlobalStoreActionType.SET_LIST_VIEW: {
                 return setStore({
                   idNamePairs: store.idNamePairs,
                   currentList: store.currentList,
@@ -201,8 +225,8 @@ function GlobalStoreContextProvider(props) {
                   isItemEditActive: store.isItemEditActive,
                   listMarkedForDeletion: store.listMarkedForDeletion,
                   isGuest: store.isGuest,
-                  listView: store.listView,
-                  currentLists: payload,
+                  listView: payload.view,
+                  currentLists: payload.top5Lists
                 });
               }
             default:
@@ -214,6 +238,31 @@ function GlobalStoreContextProvider(props) {
     // DRIVE THE STATE OF THE APPLICATION. WE'LL CALL THESE IN 
     // RESPONSE TO EVENTS INSIDE OUR COMPONENTS.
 
+    store.newSearch = async function (search) {
+        let response = await api.searchTop5List(
+          search,
+          store.listView,
+          auth.user.userName
+        );
+        if (response.status === 200) {
+          storeReducer({
+            type: GlobalStoreActionType.SET_CURRENT_LISTS,
+            payload: response.data.top5Lists,
+          });
+        }
+      };
+
+      store.addMoveItemTransaction = function (start, end) {
+        let transaction = new MoveItem_Transaction(store, start, end);
+        tps.addTransaction(transaction);
+    }
+
+    store.addUpdateItemTransaction = function (index, newText) {
+        let oldText = store.currentList.items[index];
+        let transaction = new UpdateItem_Transaction(store, index, oldText, newText);
+        tps.addTransaction(transaction);
+    }
+    
     store.updateGuest = function (guest) {
         storeReducer({
           type: GlobalStoreActionType.SET_IS_GUEST,
@@ -296,6 +345,21 @@ function GlobalStoreContextProvider(props) {
             console.log("API FAILED TO GET THE LIST PAIRS");
         }
     }
+
+    // store.loadTop5Lists = async function () {
+    //     console.log("store.loadTop5Lists");
+    //     const response = await api.getTop5Lists();
+    //     if (response.status === 200) {
+    //         let top5List = response.data.top5Lists;
+    //         storeReducer({
+    //             type: GlobalStoreActionType.SET_CURRENT_LISTS,
+    //             payload: top5List
+    //         });
+    //     }
+    //     else {
+    //         console.log("API FAILED TO GET THE TOP 5 LISTS");
+    //     }
+    // }
 
     // THE FOLLOWING 5 FUNCTIONS ARE FOR COORDINATING THE DELETION
     // OF A LIST, WHICH INCLUDES USING A VERIFICATION MODAL. THE

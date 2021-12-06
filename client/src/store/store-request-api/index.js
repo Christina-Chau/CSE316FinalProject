@@ -46,13 +46,16 @@ export const updateTop5ListById = (id, top5List) => {
         top5List: top5List,
       });
 };
+export const searchTop5List = (search, listView, userName) =>
+   api.post(`/search/top5list/`, { search: search, listView: listView, userName: userName });
 
 const apis = {
     createTop5List,
     deleteTop5ListById,
     getTop5ListById,
     getTop5ListPairs,
-    updateTop5ListById
+    updateTop5ListById, 
+    searchTop5List
 }
 
 export default apis;

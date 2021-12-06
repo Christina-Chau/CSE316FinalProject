@@ -26,8 +26,8 @@ function ListCard(props) {
   const { store } = useContext(GlobalStoreContext);
   const [editActive, setEditActive] = useState(false);
   const [text, setText] = useState("");
-  const { top5List } = props;
-  // const { idNamePair, selected } = props;
+  //const { top5List } = props;
+   const { idNamePair, selected } = props;
 
      //list expand
     const [expanded, setExpanded] = useState(false);
@@ -67,7 +67,7 @@ function ListCard(props) {
         event.stopPropagation();
         let ex = !expanded;
         setExpanded(ex);
-        handleLoadList(event, top5List._id);
+        handleLoadList(event, idNamePair._id);
     }
 
     function handleToggleEdit(event) {
@@ -113,26 +113,10 @@ function ListCard(props) {
         cardStatus = true;
     }
 
-    let items = (
-      <List
-        sx={{
-          border: 2,
-          borderRadius: 8,
-          width: "100%",
-        }}
-      >
-        {top5List.items.map((item, index) => (
-          <ListItem>
-            <Typography>{index + 1 + ". " + item}</Typography>
-          </ListItem>
-        ))}
-      </List>
-    );
-
     let cardElement = (
       <ListItem
-        id={top5List._id}
-        key={top5List._id}
+        id={idNamePair._id}
+        key={idNamePair._id}
         sx={{
           border: 2,
           borderRadius: 8,
@@ -141,7 +125,6 @@ function ListCard(props) {
           marginTop: "15px",
           display: "flex",
           p: 1,
-          bgcolor: "white",
         }}
         style={{ width: "100%" }}
         style={{
@@ -151,7 +134,7 @@ function ListCard(props) {
         <Grid container spacing={2}>
           <Grid item xs={9}>
             <Typography display="inline" style={{ fontSize: "20pt" }}>
-              {top5List.name}
+              {idNamePair.name}
             </Typography>
           </Grid>
           <Grid item xs={1}>
@@ -180,24 +163,24 @@ function ListCard(props) {
           </Grid>
           <Grid item xs={1}>
             <IconButton
-              onClick={(event) => {
-                handleDeleteList(event, top5List._id);
-              }}
+              // onClick={(event) => {
+              //   handleDeleteList(event, top5List._id);
+              // }}
               aria-label="delete"
             >
               <DeleteIcon style={{ fontSize: "20pt" }} />
             </IconButton>
           </Grid>
           <Grid item xs={9}>
-            <Typography display="inline">{"By: " + top5List.username}</Typography>
+            {/* <Typography display="inline">{"By: " + top5List.username}</Typography> */}
           </Grid>
           <Grid item xs={3}>
-            <Typography display="inline">{"Views: " + top5List.views}</Typography>
+            {/* <Typography display="inline">{"Views: " + top5List.views}</Typography> */}
           </Grid>
           <Grid item xs={11}>
-            <Typography display="inline">
+            {/* <Typography display="inline">
               {"Published: " + top5List.publishedDate}
-            </Typography>
+            </Typography> */}
           </Grid>
           <Grid item xs={1}>
             <IconButton
@@ -216,8 +199,8 @@ function ListCard(props) {
     if (expanded) {
       cardElement = (
         <ListItem
-          id={top5List._id}
-          key={top5List._id}
+          id={idNamePair._id}
+          key={idNamePair._id}
           sx={{
             border: 2,
             borderRadius: 8,
@@ -226,7 +209,6 @@ function ListCard(props) {
             marginTop: "15px",
             display: "flex",
             p: 1,
-            bgcolor: "white",
           }}
           style={{ width: "100%" }}
           style={{
@@ -236,16 +218,16 @@ function ListCard(props) {
           <Grid container spacing={2}>
             <Grid item xs={9}>
               <Typography display="inline" style={{ fontSize: "20pt" }}>
-                {top5List.name}
+                {idNamePair.name}
               </Typography>
             </Grid>
             <Grid item xs={1}>
               <IconButton
                 aria-label="like"
                 color="primary"
-                onClick={(event) => {
-                  handleLike(event);
-                }}
+                // onClick={(event) => {
+                //   handleLike(event);
+                // }}
               >
                 <ThumbUpIcon style={{ fontSize: "20pt" }} />
               </IconButton>
@@ -255,9 +237,9 @@ function ListCard(props) {
               <IconButton
                 aria-label="like"
                 color="primary"
-                onClick={(event) => {
-                  handleDislike(event);
-                }}
+                // onClick={(event) => {
+                //   handleDislike(event);
+                // }}
               >
                 <ThumbDownIcon style={{ fontSize: "20pt" }} />
               </IconButton>
@@ -266,7 +248,7 @@ function ListCard(props) {
             <Grid item xs={1}>
               <IconButton
                 onClick={(event) => {
-                  handleDeleteList(event, top5List._id);
+                  handleDeleteList(event, idNamePair._id);
                 }}
                 aria-label="delete"
               >
@@ -274,27 +256,27 @@ function ListCard(props) {
               </IconButton>
             </Grid>
             <Grid item xs={12}>
-              <Typography display="inline">
+              {/* <Typography display="inline">
                 {"By: " + top5List.username}
-              </Typography>
+              </Typography> */}
             </Grid>
  
-            <Grid item xs={6}>
+            {/* <Grid item xs={6}>
               {items}
             </Grid>
-            {/* <Grid item xs={6}>
+            <Grid item xs={6}>
               {comments}
             </Grid> */}
  
             <Grid item xs={9}>
-              <Typography display="inline">
+              {/* <Typography display="inline">
                 {"Published: " + top5List.publishedDate}
-              </Typography>
+              </Typography> */}
             </Grid>
             <Grid item xs={2}>
-              <Typography display="inline">
+              {/* <Typography display="inline">
                 {"Views: " + top5List.views}
-              </Typography>
+              </Typography> */}
             </Grid>
  
             <Grid item xs={1}>
